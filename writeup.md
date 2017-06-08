@@ -111,7 +111,7 @@ The final model architecture (behavioral_cloning.py lines 40-56) consisted of a 
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
-![Center image][./figures/center_2017_06_01_17_19_43_601.jpg]
+![Center image](./figures/center_2017_06_01_17_19_43_601.jpg)
 
 I then recorded the vehicle recovering from the left side and right side of the road back to center so that the vehicle would learn to drive from the left or right side of the track (high steering angles) back to the center instead of falling off the track. These images show what a recovery looks like starting from ... :
 
