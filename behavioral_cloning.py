@@ -5,7 +5,7 @@ import numpy as np
 
 # Load csv file:
 lines = []
-with open('./my_training_data/driving_log.csv') as csvfile:
+with open('./my_training_data_1/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
     for line in reader:
         lines.append(line)
@@ -17,7 +17,7 @@ for line in lines:
     #for view in range(3):
         path = line[0]
         filename = path.split('/')[-1]
-        new_path = './my_training_data/IMG/' + filename
+        new_path = './my_training_data_1/IMG/' + filename
         image = cv2.imread(new_path)
         image_flipped = np.fliplr(image)
         images.append(image)
@@ -47,18 +47,18 @@ model.add(Convolution2D(64,3,3, activation='relu'))
 model.add(Convolution2D(64,3,3, activation='relu'))
 model.add(Flatten())
 model.add(Dense(1164))
-model.add(Dropout(0.75))
+#model.add(Dropout(0.75))
 model.add(Dense(100))
-model.add(Dropout(0.75))
+#model.add(Dropout(0.75))
 model.add(Dense(50))
-model.add(Dropout(0.75))
+#model.add(Dropout(0.25))
 model.add(Dense(10))
 model.add(Dense(1))
 
 
 # Train model
 model.compile(loss='mse', optimizer='adam')
-model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=3)
+model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=5)
 
 # Save model
 model.save('behavioral_cloning.h5')
