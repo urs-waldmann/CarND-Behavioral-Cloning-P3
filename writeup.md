@@ -11,17 +11,6 @@ The goals / steps of this project are the following:
 * Test that the model successfully drives around track one without leaving the road
 * Summarize the results with a written report
 
-
-[//]: # (Image References)
-
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
-
 ## Rubric Points
 Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation. The link to my github repository is [here](https://github.com/urs-waldmann/CarND-Behavioral-Cloning-P3).
 
@@ -77,17 +66,19 @@ For details about how I created the training data, see the next section.
 
 The overall strategy for deriving a model architecture was to try several known model architectures with a small training data set, choose a model architecture, augment the training data set and modify the model architecture to avoid overfitting.
 
-My first step was to use the [LeNet](http://yann.lecun.com/exdb/lenet/) convolution neural network model. I thought this model might be appropriate because it is a known model architecture that works very well on the ImageNet data set. This model worked well  until I heavily augmented the training data set.
+My first step was to use the [LeNet](http://yann.lecun.com/exdb/lenet/) convolution neural network model. I thought this model might be appropriate because it is a known model architecture that works very well on the MNIST data set and is a good starting point. This model worked very well  until I heavily augmented the training data set.
 
 My second step was to try the [convolutional neural network from NVIDIA](https://arxiv.org/pdf/1604.07316.pdf). I thought this is even more appropriate since NVIDIA is using this model architecture to drive autonomous cars.
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
-To combat the overfitting, I modified the model so that ...
+To combat the overfitting, I modified the model by adding dropout layers after the first three fully connected layers. But this did not improve overfitting.
 
-Then I ... 
+Then I tried to use less convolutional and/or fully connected layers but also this attempt did not work.
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+Finally I augmented the training data set such that the model was only very slightly overfitting. This was good enough to train the model such that it could drive the car autonomously around the first curve of track 1.
+
+The final step was to run the simulator to see how well the car was driving around track one. The car fell off the track in the second and third curve respectively. To improve the driving behavior in these cases, I collected more data driving the car exactly in these curves. Especially recovering the car from the left and right side of the track back to the center. I drove the curves clock-wise and counterclock-wise.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
@@ -95,14 +86,34 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 The final model architecture (behavioral_cloning.py lines 40-56) consisted of a convolution neural network with the following layers and layer sizes:
 
+| Layer         		|     Description	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| Input         		| 160x320x3 colour image   					| 
+| Cropping         		| Cropping 50 pixel rows from the top and 20 pixel rows from the bottom of the image   					| 
+| Preproccessing         		| Normalization and mean centering of the images    					| 
+| Convolution 5x5     	| 2x2 stride, 24 filters 	|
+| RELU					|												|
+| Convolution 5x5     	| 2x2 stride, 36 filters 	|
+| RELU					|												|
+| Convolution 5x5     	| 2x2 stride, 48 filters 	|
+| RELU					|												|
+| Convolution 5x5     	| 1x1 stride, 64 filters 	|
+| RELU					|												|
+| Convolution 5x5     	| 1x1 stride, 64 filters 	|
+| RELU					|												|
+| Fully connected		| outputs 1164 					|
+| Fully connected		| outputs 100     					|
+| Fully connected		| outputs 50     					|
+| Fully connected		| outputs 10     					|
+| Output        		| output 1      					|
 
 #### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
-![alt text][image2]
+![Center image][./figures/center_2017_06_01_17_19_43_601.jpg]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+I then recorded the vehicle recovering from the left side and right side of the road back to center so that the vehicle would learn to drive from the left or right side of the track (high steering angles) back to the center instead of falling off the track. These images show what a recovery looks like starting from ... :
 
 ![alt text][image3]
 ![alt text][image4]
@@ -110,15 +121,12 @@ I then recorded the vehicle recovering from the left side and right sides of the
 
 Then I repeated this process on track two in order to get more data points.
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+To augment the data set, I also flipped images and angles thinking that in this way I would get rid of the left turn bias of track 1. For example, here is an image that has then been flipped:
 
 ![alt text][image6]
 ![alt text][image7]
 
-Etc ....
-
 After the collection process, I had 53 874 number of data points. I then preprocessed this data by normalizing and mean centering it.
-
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
