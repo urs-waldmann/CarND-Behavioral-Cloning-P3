@@ -113,7 +113,7 @@ To capture good driving behavior, I first recorded two laps on track one using c
 
 ![Center image](./figures/center_2017_06_01_17_19_43_601.jpg)
 
-I then recorded the vehicle recovering from the left side and right side of the road back to center so that the vehicle would learn to drive from the left or right side of the track (high steering angles) back to the center instead of falling off the track. These images show what a recovery looks like starting from ... :
+I then recorded the vehicle recovering from the left side and right side of the road back to center so that the vehicle would learn to drive from the left or right side of the track (high steering angles) back to the center instead of falling off the track. These images show what a recovery looks like starting from the outer right side of a left turn and ending up in the center of the left turn:
 
 ![Recover image 1](./figures/center_2017_06_11_21_49_04_514.jpg)
 ![Recover image 2](./figures/center_2017_06_11_21_49_05_863.jpg)
