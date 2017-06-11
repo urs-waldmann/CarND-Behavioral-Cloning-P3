@@ -115,16 +115,18 @@ To capture good driving behavior, I first recorded two laps on track one using c
 
 I then recorded the vehicle recovering from the left side and right side of the road back to center so that the vehicle would learn to drive from the left or right side of the track (high steering angles) back to the center instead of falling off the track. These images show what a recovery looks like starting from ... :
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+![Recover image 1](./figures/center_2017_06_11_21_49_04_514.jpg)
+![Recover image 2](./figures/center_2017_06_11_21_49_05_863.jpg)
+![Recover image 3](./figures/center_2017_06_11_21_49_06_446.jpg)
 
-Then I repeated this process on track two in order to get more data points.
+I also recorded one lap on track 1 using counterclock-wise center lane driving. And I also recorded the vehicle recovering from the left side and right side of the road back to the center (counterclock-wise).
+
+Then I collected some data (more or less one lap driving clock-wise) on track two in order to get more data points.
 
 To augment the data set, I also flipped images and angles thinking that in this way I would get rid of the left turn bias of track 1. For example, here is an image that has then been flipped:
 
-![alt text][image6]
-![alt text][image7]
+![Original image](./figures/center_2017_06_01_17_19_43_601.jpg)
+![Flipped image](./figures/flipped.jpg)
 
 After the collection process, I had 53 874 number of data points. I then preprocessed this data by normalizing and mean centering it.
 
